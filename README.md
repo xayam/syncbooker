@@ -23,7 +23,7 @@ https://cloud.mail.ru/public/rdBB/KHvCjQdaT
 - create folders "/modelrus" and "/modeleng"
   and unzip in this folders models from link https://alphacephei.com/vosk/models (russian and english model, 1.8GB each)
   
-# For create sync book:
+# For create own sync book:
 - put files .mp3 in folders "/data/AUTHOR_-_NAME_BOOK/mp3rus/" and "/data/AUTHOR_-_NAME_BOOK/mp3eng/"
 - put files rus.fb2, eng.fb2, rus.txt, eng.txt, cover.jpg, rus.annot.txt, eng.annot.txt in folder "/data/AUTHOR_-_NAME_BOOK/"
 - run command in venv "python.exe createsync.py"
