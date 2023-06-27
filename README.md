@@ -1,2 +1,13 @@
-# syncbooker
-DHT client for create/upload/download/viewing/listening books (catalog audiobooks is automatic updating)
+#SyncBooker
+
+https://github.com/xayam/syncbooker
+
+#Audio player for
+- create
+- viewing
+- listening books 
+
+- catalog audiobooks are included
+
+#List of books:
+- Wells H.G. The Time Machine 
