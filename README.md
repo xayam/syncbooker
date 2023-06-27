@@ -6,7 +6,7 @@ https://github.com/xayam/syncbooker
 - create
 - viewing
 - listening books 
-
+- on two language: russian and english
 - catalog audiobooks are included
 
 # List of books:
