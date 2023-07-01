@@ -5,7 +5,7 @@ import pygame
 
 class App(Sceleton):
     NAME = 'SyncBooker'
-    VERSION = '1.3'
+    VERSION = '2.0'
 
     def __init__(self):
 
@@ -18,6 +18,8 @@ class App(Sceleton):
         pygame.mixer.pre_init()
         pygame.mixer.init()
         pygame.init()
+
+        self.loading = True
 
         Sceleton.__init__(self, self.root)
         self.root.mainloop()

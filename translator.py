@@ -28,9 +28,13 @@ class Translator:
         translated_soap = translatehtml.translate_html(self.translation, html)
         return str(translated_soap), html
 
-    def text2html(self, text: str):
+    def text2html(self, text,
+                  pattern=r'("?”?.+?)(\.\.\.?|\.\)?|!\.?\.?|\?\.?\.?|\n\n)',
+                  replacepattern=r'<p>\1\2</p>'):
         text1 = text[:].replace('"', ' ')
         text1 = text1.replace('”', ' ')
-        result = re.sub(r'"?”?(.+?)(\.\.\.|\.\)?|!\.?\.?|\?\.?\.?|\n\n)', r'<p>\1\2</p>', text1,
+        result = re.sub(pattern, replacepattern, text1,
                         flags=re.DOTALL | re.UNICODE)
+        # r'("?”?.+?)(\.\.\.|\.\)?|!\.?\.?|\?\.?\.?|\n\n?|,|;)'
+        # r'("?”?.*?)(\n\n)'
         return f"<html>{result}</html>"

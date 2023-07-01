@@ -14,6 +14,8 @@ L_POS = 0
 R_POS = 1
 L_WORDS = 2
 R_WORDS = 3
+L_a = 4
+L_b = 5
 
 
 
@@ -30,15 +32,16 @@ def time_format_srt(time):
     return '{:02.0f}:{:02.0f}:{:02.0f},{}'.format(hour, minute, second, milli)
 
 
-arr = [
-    [000, 000, 000, 000, 100, 000, 000],
-    [000, 000, 000, 000, 000, 000, 000],
-    [000, 000, 100, 000, 000, 000, 000],
-    [100, 000, 000, 000, 000, 000, 000],
-    [000, 000, 000, 000, 000, 000, 000],
-    [000, 000, 000, 000, 000, 000, 000],
-    [100, 000, 000, 000, 000, 000, 000],
-    [000, 000, 000, 000, 000, 000, 100]]
+def text2html(text,
+              pattern=r'("?”?.+?)(\.\.\.?|\.\)?|!\.?\.?|\?\.?\.?|\n\n)',
+              replacepattern=r'<p>\1\2</p>'):
+    text1 = text[:].replace('"', ' ')
+    text1 = text1.replace('”', ' ')
+    result = re.sub(pattern, replacepattern, text1,
+                    flags=re.DOTALL | re.UNICODE)
+    # r'("?”?.+?)(\.\.\.|\.\)?|!\.?\.?|\?\.?\.?|\n\n?|,|;)'
+    # r'("?”?.*?)(\n\n)'
+    return f"<html>{result}</html>"
 
 barrier = 0.0
 
@@ -89,12 +92,13 @@ def find_max_sum(alist, a=0, b=0, sum=0, path=None):
                 pathResult.append(find_max_sum(alist, c["a"] + 1, c["b"] + 1, c["s"], pathNew))
             if diagI != 1:
                 pathResult.append(find_max_sum(alist, diagA, diagB, sum, path))
-            maximum = 0
+            maximum = 0.0
             maxpath = []
             for p in pathResult:
-                if len(p) > maximum:
-                    maximum = len(p)
-                    maxpath = p[:]
+                if len(p) > 0:
+                    if p[-1]["s"] > maximum:
+                        maximum = p[-1]["s"]
+                        maxpath = p[:]
             if maxpath:
                 return maxpath
         a += 1
@@ -159,8 +163,68 @@ def find_max_path(alist, a=0, b=0, path=None):
     return path
 
 
+def dijkstra_max_path(alist):
+    a = 0
+    b = 0
+    nodes = [[]]
+    for i in range(1, len(alist)):
+        for j in range(1, len(alist[i])):
+            if alist[i][j] == 100:
+                nodes[0].append({"a": a, "b": b, "i": i, "j": j})
+
+    while True:
+        nodes2 = []
+        for c in range(len(nodes[-1])):
+            for i in range(nodes[-1][c]["i"] + 1, len(alist)):
+                for j in range(nodes[-1][c]["j"] + 1, len(alist[i])):
+                    if alist[i][j] == 100:
+                        nodes2.append({"a": nodes[-1][c]["i"], "b": nodes[-1][c]["j"], "i": i, "j": j})
+        if not nodes2:
+            break
+        nodes.append(nodes2)
+    paths = []
+    for i in range(len(nodes[0])):
+        nodes[0][i]["s"] = ((nodes[0][i]["i"] - nodes[0][i]["a"]) ** 2 +
+                            (nodes[0][i]["j"] - nodes[0][i]["b"]) ** 2) ** 0.5
+        paths.append([])
+        paths[-1].append(nodes[0][i])
+        for j in range(1, len(nodes[0])):
+            try:
+                nodes[j][i]["s"] = nodes[0][i]["s"] + \
+                                   ((nodes[j][i]["i"] - nodes[j][i]["a"]) ** 2 +
+                                   (nodes[j][i]["j"] - nodes[j][i]["b"]) ** 2) ** 0.5
+                paths[-1].append(nodes[j][i])
+            except IndexError:
+                pass
+    maximum = 0
+    for i in range(len(paths)):
+        if len(paths[i]) > maximum:
+            maximum = len(paths[i])
+    minimum = 10 ** 9
+    if len(paths) == 0:
+        return []
+    index = 0
+    for i in range(len(paths)):
+        if len(paths[i]) == maximum:
+            if minimum > paths[i][-1]["s"]:
+                minimum = paths[i][-1]["s"]
+                index = i
+    return paths[index]
+
+
 if __name__ == "__main__":
-    print(find_max_path(arr))
+    arr = [
+        [000, 000, 000, 000, 100, 000, 000],
+        [000, 100, 000, 000, 000, 000, 000],
+        [000, 000, 100, 000, 000, 000, 000],
+        [100, 000, 000, 100, 000, 000, 000],
+        [000, 100, 000, 000, 100, 000, 000],
+        [000, 000, 000, 000, 000, 100, 000],
+        [100, 000, 000, 000, 000, 000, 000],
+        [000, 000, 000, 000, 000, 000, 100]]
+    # print(find_max_path(arr))
+    pathsindex = dijkstra_max_path(arr)
+    print(pathsindex)
 
 
 def middle_time(sync):

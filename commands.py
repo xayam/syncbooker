@@ -7,7 +7,11 @@ class Commands(ABC):
         pass
 
     @abstractmethod
-    def menu_help_doc_click(self, event=None):
+    def menu_help_faq_click(self, event=None):
+        pass
+
+    @abstractmethod
+    def menu_help_about_click(self, event=None):
         pass
 
     @abstractmethod

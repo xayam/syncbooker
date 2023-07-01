@@ -1,17 +1,9 @@
+
 RU = 'RU'
 EN = 'EN'
-Locale = RU
 
+LOCALE = EN
 
-def MENU_FILE_EXIT():
-    if Locale == RU:
-        return 'Выход'
-    else:
-        return 'Exit'
-
-
-def MENU_HELP_ABOUT():
-    if Locale == RU:
-        return 'О программе'
-    else:
-        return 'About'
+# Menu items
+MENU_FILE_EXIT = {RU: 'Выход', EN: 'Exit'}
+MENU_HELP_ABOUT = {RU: 'О программе...', EN: 'About...'}

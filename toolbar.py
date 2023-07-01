@@ -13,7 +13,6 @@ class ToolBar(Commands):
         self.toolbar = toolbar
 
         self.pause_len = 0
-
         self._create_toolbar()
 
     def _create_toolbar(self):
@@ -25,7 +24,6 @@ class ToolBar(Commands):
 
 
         self.frame_right_navigator = tk.Frame(self.toolbar)
-        self.frame_right_navigator.pack(fill=tk.X, side=tk.TOP, expand=False)
 
         empty1 = tk.Label(master=self.frame_right_navigator, text="", font=("Aerial", 20), width=1)
         empty1.pack(fill=tk.BOTH, side=tk.LEFT, expand=False)
@@ -51,7 +49,7 @@ class ToolBar(Commands):
         #                                  )
         # self.size_font_button.pack(fill=tk.BOTH, side=tk.LEFT, expand=False)
 
-        empty2 = tk.Label(master=self.frame_right_navigator, text="", font=("Aerial", 20), width=6)
+        empty2 = tk.Label(master=self.frame_right_navigator, text="", font=("Aerial", 20), width=4)
         empty2.pack(fill=tk.BOTH, side=tk.LEFT, expand=False)
 
         self.label_audio = ttk.Label(master=self.frame_right_navigator, font=("Aerial", 20), text=u"🕫")
@@ -104,6 +102,7 @@ class ToolBar(Commands):
 
     def russian_click(self):
         self.pause()
+        self.statusbar_label1.configure(text="Audio: " + self.audio_lang.get())
         self.annotation_text_area1.tag_remove("start", "1.0", "end")
         self.annotation_text_area2.tag_remove("start", "1.0", "end")
         pygame.mixer.music.load(self.current_dir + "rus.flac")
@@ -112,6 +111,7 @@ class ToolBar(Commands):
 
     def english_click(self):
         self.pause()
+        self.statusbar_label1.configure(text="Audio: " + self.audio_lang.get())
         self.annotation_text_area1.tag_remove("start", "1.0", "end")
         self.annotation_text_area2.tag_remove("start", "1.0", "end")
         pygame.mixer.music.load(self.current_dir + "eng.flac")
@@ -122,12 +122,12 @@ class ToolBar(Commands):
         if self.books:
             self.annotation_text_area1.tag_remove("start", "1.0", "end")
             self.annotation_text_area2.tag_remove("start", "1.0", "end")
-            self.frame_left_list.selection_clear(0, 'end')
-            index = self.current_select - 1
+            # self.frame_left_list.selection_clear(0, 'end')
+            index = self.current_index - 1
             if index < 0:
-                index = len(self.books) - 1
-            self.frame_left_list.select_set(index)
-            self.frame_left_list.event_generate("<<ListboxSelect>>")
+                index = len(self.covers_label) - 1
+            self.root.update()
+            self.covers_label[index].event_generate("<Button-1>")
 
     def play(self):
         self.flag_pause = False
@@ -141,26 +141,37 @@ class ToolBar(Commands):
         self.pause_len += pygame.mixer.music.get_pos()
 
     def stop(self):
-        self.annotation_text_area1.tag_remove("start", "1.0", "end")
-        self.annotation_text_area2.tag_remove("start", "1.0", "end")
+        if not self.loading:
+            self.annotation_text_area.tag_remove("insert", "1.0", "end")
+            self.annotation_text_area1.tag_remove("start", "1.0", "end")
+            self.annotation_text_area2.tag_remove("start", "1.0", "end")
         pygame.mixer.music.stop()
         self.flag_pause = True
         self.pause_len = 0
         self.pos_end = 0
         self.start = 0
+        if not self.loading:
+            self.annotation_text_area_other.focus()
+            self.annotation_text_area_other.mark_set("insert", "1.0")
+            self.annotation_text_area_other.see("insert")
+            self.annotation_text_area.focus()
+            self.annotation_text_area.mark_set("insert", "1.0")
+            self.annotation_text_area.see("insert")
 
     def forward(self):
         if self.books:
             self.annotation_text_area1.tag_remove("start", "1.0", "end")
             self.annotation_text_area2.tag_remove("start", "1.0", "end")
-            self.frame_left_list.selection_clear(0, 'end')
-            index = self.current_select + 1
-            if index > len(self.books) - 1:
+            # self.frame_left_list.selection_clear(0, 'end')
+            index = self.current_index + 1
+            if index > len(self.covers_label) - 1:
                 index = 0
-            self.frame_left_list.select_set(index)
-            self.frame_left_list.event_generate("<<ListboxSelect>>")
+            self.root.update()
+            self.covers_label[index].event_generate('<Button-1>')
 
     def play_timer(self):
+        if self.flag_pause:
+            return
         self.annotation_text_area1.tag_remove("start", "1.0", "end")
         self.annotation_text_area2.tag_remove("start", "1.0", "end")
         if self.audio_lang.get() == self.english:
@@ -198,17 +209,22 @@ class ToolBar(Commands):
                     self.annotation_text_area.see("insert")
                 self.centered_insert()
                 self.pos_end = self.sync[i][POS_START]
+                self.sync_i = i
                 self.start = self.sync[i][TIME_START]
-                # self.frame_right_slider_value.set(self.start)
-                self.scroll_other()
-                with open("options.pkl", mode="wb") as pkl:
-                    self.options["positions"][self.current_select] = \
-                        str(self.pause_len + pygame.mixer.music.get_pos()) + \
-                        "\n" + f"{count_lines}.{count_chars}" + \
-                        "\n" + str(self.start)
-                    pickle.dump(self.options, pkl)
-                break
 
+                self.scroll_other()
+
+                # with open("options.pkl", mode="wb") as pkl:
+                #     self.options["positions"][self.current_select] = \
+                #         str(self.pause_len + pygame.mixer.music.get_pos()) + \
+                #         "\n" + f"{count_lines}.{count_chars}" + \
+                #         "\n" + str(self.start)
+                #     pickle.dump(self.options, pkl)
+                break
+                
+        self.statusbar_label2.configure(text="Position: " +
+                                             self.annotation_text_area1.index("current") + "/" +
+                                             self.annotation_text_area2.index("current"))
         if not self.flag_pause:
             self.root.after(500, self.play_timer)
 
@@ -257,52 +273,33 @@ class ToolBar(Commands):
 
     def scroll_other(self):
         if self.audio_lang.get() == self.english:
-            orig_html = self.orig_html[6:-7]
-            html = self.rus_html[6:-7]
-            eng_html = self.eng_html[6:-7]
-            two = self.two
+            curr = R_POS
+            curr_other = L_POS
         else:
-            orig_html = self.orig_html2[6:-7]
-            html = self.rus_html2[6:-7]
-            eng_html = self.eng_html2[6:-7]
-            two = self.two2
-        result_orig1 = [m.start() for m in re.finditer(r"(<p>)", orig_html)]
-        result_orig2 = [m.start() for m in re.finditer(r"(</p>)", orig_html)]
-        result_rus1 = [m.start() for m in re.finditer(r"(<p>)", html)]
-        result_rus2 = [m.start() for m in re.finditer(r"(</p>)", html)]
-        result_eng1 = [m.start() for m in re.finditer(r"(<p>)", eng_html)]
-        result_eng2 = [m.start() for m in re.finditer(r"(</p>)", eng_html)]
-        result_orig = []
-        for i in range(len(result_orig1)):
-            result_orig.append(orig_html[result_orig1[i] + 3:result_orig2[i]])
-        result_rus = []
-        for i in range(len(result_rus1)):
-            result_rus.append(html[result_rus1[i] + 3:result_rus2[i]])
-        result_eng = []
-        for i in range(len(result_eng1)):
-            result_eng.append(eng_html[result_eng1[i] + 3:result_eng2[i]])
-        if self.audio_lang.get() == self.english:
-            curr = result_eng
-        else:
-            curr = result_rus
-        str1 = ''
-        count = 0
-        for i in range(len(curr)):
-            for c in curr[i]:
-                str1 += c
-            if len(str1) > self.pos_end:
-                count = i
-                break
-        for i in two:
-            if i[R_POS] > count:
-                txt = ''
-                for t in range(i[L_POS]):
-                    txt += result_orig[t]
+            curr = L_POS
+            curr_other = R_POS
+
+        for i in range(len(self.two)):
+            if self.two[i][curr] > self.pos_end:
+                txt = self.book_other[:self.two[i][curr_other]]
                 split1 = txt.split("\n")
-                count_chars = 0
                 count_lines = len(split1)
+                count_chars = sum([len(j) + 1 for j in split1[-1].split(" ")]) - 1
                 self.annotation_text_area_other.mark_set("insert", f"{count_lines}.{count_chars}")
                 self.annotation_text_area_other.tag_add("start", f"1.0", f"{count_lines}.{count_chars}")
                 self.annotation_text_area_other.tag_config("start", background="yellow", foreground="black")
-                self.centered_insert(center=True)
                 break
+
+        # self.annotation_text_area.tag_add("start2", f"1.0", f"{count_lines}.{count_chars}")
+        # self.annotation_text_area.tag_config("start2", background="red", foreground="black")
+        # for i in range(len(two)):
+        #     if two[i][R_POS] > count:
+        #         txt = self.book_other[:two[i][L_POS]]
+        #         split1 = txt.split("\n")
+        #         count_lines = len(split1) - 1
+        #         count_chars = sum([len(j) + 1 for j in split1[-1].split(" ")])
+        #         self.annotation_text_area_other.mark_set("insert", f"{count_lines}.{0}")
+        #         self.annotation_text_area_other.tag_add("start", f"1.0", f"{count_lines}.{0}")
+        #         self.annotation_text_area_other.tag_config("start", background="yellow", foreground="black")
+        #         break
+        self.centered_insert(center=True)
