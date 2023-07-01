@@ -1,8 +1,8 @@
 # SyncBooker
 
-Sources: https://github.com/xayam/syncbooker
-Telegram chat: https://t.me/syncbooker_chat
-Binary download: https://cloud.mail.ru/public/rdBB/KHvCjQdaT
+- Sources: https://github.com/xayam/syncbooker
+- Telegram chat: https://t.me/syncbooker_chat
+- Binary download: https://cloud.mail.ru/public/rdBB/KHvCjQdaT
 
 # History of creating SyncBooker
 
