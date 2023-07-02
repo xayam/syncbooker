@@ -14,8 +14,9 @@
 
 # List of books:
 
-- Lewis_Carroll Alices adventures in Wonderland
-- Wells H.G. The Time Machine 
+- Kafka Franz The Metamorphosis
+- Lewis Carroll Alices Adventures in Wonderland
+- Wells Herbert The Time Machine 
 
 # Binary download
 
