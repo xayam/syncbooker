@@ -49,19 +49,19 @@ class ToolBar(Commands):
         #                                  )
         # self.size_font_button.pack(fill=tk.BOTH, side=tk.LEFT, expand=False)
 
-        empty2 = tk.Label(master=self.frame_right_navigator, text="", font=("Aerial", 20), width=4)
+        empty2 = tk.Label(master=self.frame_right_navigator, text="", font=("Aerial", 20), width=14)
         empty2.pack(fill=tk.BOTH, side=tk.LEFT, expand=False)
 
-        self.label_audio = ttk.Label(master=self.frame_right_navigator, font=("Aerial", 20), text=u"🕫")
-        self.label_audio.pack(fill=tk.BOTH, side=tk.LEFT, expand=False)
+        # self.label_audio = ttk.Label(master=self.frame_right_navigator, font=("Aerial", 20), text=u"🕫")
+        # self.label_audio.pack(fill=tk.BOTH, side=tk.LEFT, expand=False)
 
         position = {"padx": 0, "pady": 0, "anchor": tk.NW}
-        self.btn_english = ttk.Radiobutton(master=self.frame_right_navigator, text=self.english,
-                                           value=self.english, variable=self.audio_lang, command=self.english_click)
-        self.btn_english.pack(fill=tk.BOTH, side=tk.LEFT, expand=False, **position)
-        self.btn_russian = ttk.Radiobutton(master=self.frame_right_navigator, text=self.russian,
-                                     value=self.russian, variable=self.audio_lang, command=self.russian_click)
-        self.btn_russian.pack(fill=tk.BOTH, side=tk.LEFT, expand=False, **position)
+        # self.btn_english = ttk.Radiobutton(master=self.frame_right_navigator, text=self.english,
+        #                                    value=self.english, variable=self.audio_lang, command=self.english_click)
+        # self.btn_english.pack(fill=tk.BOTH, side=tk.LEFT, expand=False, **position)
+        # self.btn_russian = ttk.Radiobutton(master=self.frame_right_navigator, text=self.russian,
+        #                              value=self.russian, variable=self.audio_lang, command=self.russian_click)
+        # self.btn_russian.pack(fill=tk.BOTH, side=tk.LEFT, expand=False, **position)
 
         empty3 = tk.Label(master=self.frame_right_navigator, text="", font=("Aerial", 20), width=1)
         empty3.pack(fill=tk.BOTH, side=tk.LEFT, expand=False)
@@ -270,36 +270,3 @@ class ToolBar(Commands):
         if len(parts) <= n + 1:
             return -1
         return len(string) - len(parts[-1]) - len(substring)
-
-    def scroll_other(self):
-        if self.audio_lang.get() == self.english:
-            curr = R_POS
-            curr_other = L_POS
-        else:
-            curr = L_POS
-            curr_other = R_POS
-
-        for i in range(len(self.two)):
-            if self.two[i][curr] > self.pos_end:
-                txt = self.book_other[:self.two[i][curr_other]]
-                split1 = txt.split("\n")
-                count_lines = len(split1)
-                count_chars = sum([len(j) + 1 for j in split1[-1].split(" ")]) - 1
-                self.annotation_text_area_other.mark_set("insert", f"{count_lines}.{count_chars}")
-                self.annotation_text_area_other.tag_add("start", f"1.0", f"{count_lines}.{count_chars}")
-                self.annotation_text_area_other.tag_config("start", background="yellow", foreground="black")
-                break
-
-        # self.annotation_text_area.tag_add("start2", f"1.0", f"{count_lines}.{count_chars}")
-        # self.annotation_text_area.tag_config("start2", background="red", foreground="black")
-        # for i in range(len(two)):
-        #     if two[i][R_POS] > count:
-        #         txt = self.book_other[:two[i][L_POS]]
-        #         split1 = txt.split("\n")
-        #         count_lines = len(split1) - 1
-        #         count_chars = sum([len(j) + 1 for j in split1[-1].split(" ")])
-        #         self.annotation_text_area_other.mark_set("insert", f"{count_lines}.{0}")
-        #         self.annotation_text_area_other.tag_add("start", f"1.0", f"{count_lines}.{0}")
-        #         self.annotation_text_area_other.tag_config("start", background="yellow", foreground="black")
-        #         break
-        self.centered_insert(center=True)

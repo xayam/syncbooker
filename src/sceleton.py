@@ -144,8 +144,8 @@ class Sceleton(Menu, ToolBar, StatusBar):
         with open(self.current_dir + "rus.sync.json", encoding="UTF-8", mode="r") as f:
             self.rus_sync = json.load(f)
 
-        with open(self.current_dir + "orig.html", mode="r", encoding="UTF-8") as f:
-            self.orig_html = f.read()
+        # with open(self.current_dir + "orig.html", mode="r", encoding="UTF-8") as f:
+        #     self.orig_html = f.read()
         # with open(self.current_dir + "rus.html", mode="r", encoding="UTF-8") as f:
         #     self.rus_html = f.read()
         # with open(self.current_dir + "eng.html", mode="r", encoding="UTF-8") as f:
@@ -153,8 +153,8 @@ class Sceleton(Menu, ToolBar, StatusBar):
         with open(self.current_dir + "two.json", encoding="UTF-8", mode="r") as f:
             self.two = json.load(f)
 
-        with open(self.current_dir + "orig2.html", mode="r", encoding="UTF-8") as f:
-            self.orig_html2 = f.read()
+        # with open(self.current_dir + "orig2.html", mode="r", encoding="UTF-8") as f:
+        #     self.orig_html2 = f.read()
         # with open(self.current_dir + "rus2.html", mode="r", encoding="UTF-8") as f:
         #     self.rus_html2 = f.read()
         # with open(self.current_dir + "eng2.html", mode="r", encoding="UTF-8") as f:
@@ -192,6 +192,7 @@ class Sceleton(Menu, ToolBar, StatusBar):
         # self.annotation_text_area1.bind("<Button-3>", self.left_popup)
         txt = open(self.current_dir + "eng.txt", mode="r", encoding="UTF-8")
         self.eng_book = txt.read()
+        self.book = self.eng_book
         self.annotation_text_area1.insert(tk.END, self.eng_book)
         txt.close()
         self.annotation_text_area1.mark_set("insert", "1.0")
@@ -224,6 +225,7 @@ class Sceleton(Menu, ToolBar, StatusBar):
         # self.annotation_text_area2.bind("<Button-3>", self.left_popup)
         txt = open(self.current_dir + "rus.txt", mode="r", encoding="UTF-8")
         self.rus_book = txt.read()
+        self.book_other = self.rus_book
         self.annotation_text_area2.insert(tk.END, self.rus_book)
         txt.close()
         self.annotation_text_area2.mark_set("insert", "1.0")
@@ -279,3 +281,24 @@ class Sceleton(Menu, ToolBar, StatusBar):
                 self.scroll_other()
                 break
         self.play()
+
+    def scroll_other(self):
+        if self.audio_lang.get() == self.english:
+            curr = R_POS
+            curr_other = L_POS
+        else:
+            curr = L_POS
+            curr_other = R_POS
+
+        for i in range(len(self.two)):
+            if self.two[i][curr] > self.pos_end:
+                txt = self.book_other[:self.two[i][curr_other]]
+                split1 = txt.split("\n")
+                count_lines = len(split1)
+                count_chars = sum([len(j) + 1 for j in split1[-1].split(" ")]) - 1
+                self.annotation_text_area_other.mark_set("insert", f"{count_lines}.{count_chars}")
+                self.annotation_text_area_other.tag_add("start", f"1.0", f"{count_lines}.{count_chars}")
+                self.annotation_text_area_other.tag_config("start", background="yellow", foreground="black")
+                break
+
+        self.centered_insert(center=True)

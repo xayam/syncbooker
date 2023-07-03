@@ -5,13 +5,16 @@ import pygame
 
 class App(Sceleton):
     NAME = 'SyncBooker'
-    VERSION = '2.0'
+    VERSION = '2.1'
 
     def __init__(self):
 
         self.root = tk.Tk()
         self.root.title(self.NAME + ' v' + self.VERSION)
-        self.root.iconbitmap('icon.ico')
+        try:
+            self.root.iconbitmap('icon.ico')
+        except:
+            pass
         self.root.geometry('800x600')
         self.root.state('zoomed')
 
