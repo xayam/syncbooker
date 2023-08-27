@@ -15,6 +15,7 @@
 # List of books:
 
 - Kafka Franz The Metamorphosis
+- Kuttner Henry The Ego Machine
 - Lewis Carroll Alices Adventures in Wonderland
 - Wells Herbert The Time Machine 
 
@@ -24,14 +25,19 @@ https://cloud.mail.ru/public/rdBB/KHvCjQdaT
 
 # Development installation (for create own sync book):
 
-- install python 3.7+ (tested only version 3.7)
-- create virtual enviroment in folder /venv
-- run command for venv "python.exe -m pip install --upgrade pip"
-- run command "pip install -r requirements-dev.txt"
-- create folders "/modelrus" and "/modeleng"
-  and unzip in this folders models from link https://alphacephei.com/vosk/models (russian and english model, 1.8GB each)
-- create folder /sox and unpack archive of program, which you must download on link https://sourceforge.net/projects/sox/files/sox/ choose last version (i test on version sox 14.4.2)
-  
+- install python 3.7-3.9 (tested only version 3.9)
+- creating virtual enviroment, run command "python.exe -m venv venv"
+- activating venv, run command "venv/Scripts/activate.bat"
+- upgrading pip, run command "python.exe -m pip install --upgrade pip"
+- install requirements, run command "pip install -r requirements.txt"
+- (if you not download binary "Developer Edition") create folders "/src/rus" and "/src/eng"
+  and unzip in folders models from link https://alphacephei.com/vosk/models (russian and english model, 1.8GB each)
+- install SOX for audio convert, unpack archive of program, which you must download on link https://sourceforge.net/projects/sox/files/sox/ choose last version (I test on version sox 14.4.2)
+- add SOX binary folder in PATH env
+- install Graphviz for get scheme of project. After install run command in venv:
+  "cd src" and
+  "pyan3 **/*.py --uses --no-defines --colored --grouped --annotated --svg > app.svg"
+
 # For create own sync book:
 
 - put files .mp3 in folders "/data/AUTHOR_-_NAME_BOOK/mp3rus/" 
@@ -50,10 +56,8 @@ https://cloud.mail.ru/public/rdBB/KHvCjQdaT
 
 - After that, if there were breaks and you fixed them in the files, you should delete the /valid, /rus.sync.json and /eng.sync.json files. And restart the command "python.exe createsync.py"
 
-- check quality images /rus.sync.png and /eng.sync.png
+- check quality images rus.sync.png and eng.sync.png
 
 - if there are no breaks in these files, then after that you need to check the two.png image for breaks in the main diagonal. If the gap is horizontal, then the eng.txt and english mp3 files contain pieces of text and audio that are not in the Russian version (delete them), delete rus.sync.json, delete eng.sync.json and restart createsync.py. If the gap is vertical, then the rus.txt and russian mp3 files contain pieces of text and audio that are not in the English version (delete them) and restart createsync.py
 
 - if after that there are no big gaps in any of these files and after the last run of createsync.py there is a file /valid then I congratulate you creation of synchronous books is completed and the quality should be acceptable
-
-- for the final check of the quality of the sync, you should check the sizes of the rus.sync.json and eng.sync.json files. The size of the rus.sync.json file should be approximately six times the size of the rus.txt file. And the size of the eng.sync.json file should be about nine times the size of the eng.txt file.

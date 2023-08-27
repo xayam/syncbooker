@@ -1,0 +1,14 @@
+.runConfigurations/
+venv/
+.idea/
+data/
+bin/
+
+src/__pycache__/
+src/model/__pycache__/
+src/view/__pycache__/
+src/controller/__pycache__/
+src/rus/
+src/eng/
+src/build/
+src/*.spec
