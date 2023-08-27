@@ -1,28 +1,14 @@
-import tkinter as tk
-from sceleton import Sceleton
-import pygame
+from model.model import Model
+from view.view import View
+from controller.controller import Controller
 
 
-class App(Sceleton):
+class Application(Model, Controller, View):
     NAME = 'SyncBooker'
-    VERSION = '2.1'
+    VERSION = '3.6alpha'
 
-    def __init__(self):
-
-        self.root = tk.Tk()
-        self.root.title(self.NAME + ' v' + self.VERSION)
-        try:
-            self.root.iconbitmap('icon.ico')
-        except:
-            pass
-        self.root.geometry('800x600')
-        self.root.state('zoomed')
-
-        pygame.mixer.pre_init()
-        pygame.mixer.init()
-        pygame.init()
-
-        self.loading = True
-
-        Sceleton.__init__(self, self.root)
-        self.root.mainloop()
+    def __init__(self, debug=False):
+        if not debug:
+            Model.__init__(self, app=self)
+            Controller.__init__(self, app=self)
+            View.__init__(self, app=self)
