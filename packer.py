@@ -33,6 +33,6 @@ if __name__ == "__main__":
     pack(conf={
                ".portable": ".Portable.Edition",
                ".offline": ".Offline.Edition",
-               # ".developer": ".Developer.Edition"
+               ".developer": ".Developer.Edition"
     }
     )

@@ -7,8 +7,8 @@ img/[^/\.]+?\.ico
 img/[^/\.]+?\.png
 src/[^/\.]+?\.py
 src/(model|view|controller)/[^/\.]+?\.py
-src/rus/.*
-src/eng/.*
+recognize/rus/.*
+recognize/eng/.*
 src/app\.svg
 src/syncbooker\.spec
 cases\.html

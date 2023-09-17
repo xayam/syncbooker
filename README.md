@@ -32,7 +32,8 @@ https://cloud.mail.ru/public/rdBB/KHvCjQdaT
 - install requirements, run command "pip install -r requirements.txt"
 - (if you not download binary "Developer Edition") create folders "/src/rus" and "/src/eng"
   and unzip in folders models from link https://alphacephei.com/vosk/models (russian and english model, 1.8GB each)
-- install SOX for audio convert, unpack archive of program, which you must download on link https://sourceforge.net/projects/sox/files/sox/ choose last version (I test on version sox 14.4.2)
+- install SOX for audio convert, unpack archive of program, 
+  which you must download from link https://sourceforge.net/projects/sox/files/sox/ choose last version (I test on version sox 14.4.2)
 - add SOX binary folder in PATH env
 - install Graphviz for get scheme of project. After install run command in venv:
   "cd src" and
