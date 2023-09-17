@@ -63,29 +63,31 @@ class Sceleton(Menu, StatusBar, ToolBar):
 
         self.sceleton_main.pack(fill=tk.BOTH, expand=True)
         self.sceleton_statusbar = tk.Frame(master=self.app.root, height=32)
-        self.sceleton_statusbar.pack(fill=tk.X)
+        self.sceleton_statusbar.pack(fill=tk.X, side=tk.BOTTOM)
 
-        self.sceleton_splitter_vertical1 = tk.Frame(master=self.sceleton_main, width=300)
-        self.sceleton_splitter_vertical1.pack(fill=tk.Y, side=tk.LEFT, expand=True)
+        self.sceleton_table = tk.Frame(master=self.sceleton_main)
+        self.sceleton_table.pack(fill=tk.BOTH, expand=True)
+
+        self.sceleton_splitter_vertical1 = tk.Frame(master=self.sceleton_table)
+
         self.sceleton_services = tk.Frame(master=self.sceleton_splitter_vertical1)
         self.sceleton_ads = tk.Frame(master=self.sceleton_splitter_vertical1)
         self.sceleton_services.pack(fill=tk.BOTH, expand=True)
         self.sceleton_ads.pack(fill=tk.X, side=tk.BOTTOM)
 
-        self.sceleton_table = tk.Frame(master=self.sceleton_main)
-        self.sceleton_table.pack(fill=tk.BOTH, expand=True)
         self.sceleton_table1 = tk.Frame(master=self.sceleton_table)
         self.sceleton_table2 = tk.Frame(master=self.sceleton_table)
-        self.sceleton_table1.grid(row=0, column=0, sticky="nsew")
-        self.sceleton_table2.grid(row=0, column=1, sticky="nsew")
-        self.sceleton_table.grid_columnconfigure(0, weight=1, uniform="group1")
+        self.sceleton_splitter_vertical1.grid(row=0, column=0, sticky="nsew")
+        self.sceleton_table1.grid(row=0, column=1, sticky="nsew")
+        self.sceleton_table2.grid(row=0, column=2, sticky="nsew")
         self.sceleton_table.grid_columnconfigure(1, weight=1, uniform="group1")
+        self.sceleton_table.grid_columnconfigure(2, weight=1, uniform="group1")
         self.sceleton_table.grid_rowconfigure(0, weight=1)
 
     def _create_left_list(self):
-        msg = "Папка ../data не найдена"
+        msg = SCELETON_DATA_NOT_FOUND[self.app.locale]
         if os.path.exists("../data/"):
-            msg = "Книги в папке ./data не найдены"
+            msg = SCELETON_BOOKS_NOT_FOUND[self.app.locale]
             dir1 = os.scandir("../data/")
             for surname in dir1:
                 if surname.is_dir():
@@ -99,10 +101,10 @@ class Sceleton(Menu, StatusBar, ToolBar):
             self.frame_left_list.pack(fill=tk.BOTH, expand=True)
             for book in self.app.books:
                 try:
-                    if len(self.app.options[POSITIONS][book["full"]]) > 0:
+                    if len(self.app.option[POSITIONS][book["full"]]) > 0:
                         pass
                 except KeyError:
-                    self.app.options[POSITIONS][book["full"]] = {POSI: "0\n0.0\n0.0", AUDIO: EN}
+                    self.app.option[POSITIONS][book["full"]] = {POSI: "0\n0.0\n0.0", AUDIO: EN}
 
                 self.frames_left.append(tk.Frame(master=self.frame_left_list.interior))
                 self.frames_left[-1].pack(fill=tk.X, anchor="w", expand=True, padx=5, pady=5)

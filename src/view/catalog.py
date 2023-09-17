@@ -20,7 +20,7 @@ class Catalog:
         self.show_catalog()
 
     def _create_catalog(self):
-        self.label_catalog = tk.Label(self.catalog, text="В разработке")
+        self.label_catalog = tk.Label(self.catalog, text=CATALOG_IN_DEV[self.app.locale])
         self.label_catalog.pack(fill=tk.BOTH, expand=True)
 
     def show_catalog(self):
