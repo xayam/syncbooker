@@ -69,7 +69,7 @@ class Player:
         self.app.pause()
         self.app.statusbar_label1.configure(
             text=STATUS_AUDIO[self.app.locale] + ": " +
-            self.app.options[POSITIONS][self.app.current_select][AUDIO])
+            self.app.option[POSITIONS][self.app.current_select][AUDIO])
         self.app.annotation_text_area1.tag_remove("start", "1.0", "end")
         self.app.annotation_text_area2.tag_remove("start", "1.0", "end")
         pygame.mixer.music.load(flac)
@@ -81,7 +81,7 @@ class Player:
             return
         self.app.annotation_text_area1.tag_remove("start", "1.0", "end")
         self.app.annotation_text_area2.tag_remove("start", "1.0", "end")
-        if self.app.options[POSITIONS][self.app.current_select][AUDIO] == EN:
+        if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
             curr = R_POS
             curr_other = L_POS
             self.app.annotation_text_area = self.app.annotation_text_area1
@@ -116,8 +116,8 @@ class Player:
                 self.app.annotation_text_area.mark_set("insert", f"{count_lines}.{count_chars}")
                 self.app.annotation_text_area.tag_add("start", f"1.0", f"{count_lines}.{count_chars}")
                 self.app.annotation_text_area.tag_config("start",
-                                                         background=self.app.options[SEL],
-                                                         foreground=self.app.options[FG])
+                                                         background=self.app.option[SEL],
+                                                         foreground=self.app.option[FG])
                 if self.app.flag_pause:
                     self.app.annotation_text_area.see("insert")
                 self.app.centered_insert()
@@ -137,7 +137,7 @@ class Player:
                                         text=STATUS_POSITION[self.app.locale] + ": " +
                                         self.app.annotation_text_area1.index("current") + "/" +
                                         self.app.annotation_text_area2.index("current"))
-                                    self.app.options[POSITIONS][self.app.current_select][POSI] = \
+                                    self.app.option[POSITIONS][self.app.current_select][POSI] = \
                                         str(self.app.pause_len + pygame.mixer.music.get_pos()) + \
                                         "\n" + f"{count_lines}.{count_chars}" + \
                                         "\n" + str(self.app.start)

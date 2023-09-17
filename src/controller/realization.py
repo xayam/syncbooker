@@ -21,7 +21,7 @@ class Realization(Commands):
         if self.app.locale == event:
             return
         self.app.set_locale(event)
-        self.app.options[LOCALE] = self.app.locale
+        self.app.option[LOCALE] = self.app.locale
         self.app.save_options()
         showinfo(MENU_SERVICE[self.app.locale], MENU_SERVICE_RESTART[self.app.locale])
         os.execv(sys.executable, [sys.executable, __file__] + sys.argv)

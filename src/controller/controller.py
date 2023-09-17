@@ -42,7 +42,7 @@ class Controller:
         self.current_select = text
         self.current_dir = "../data/" + text + "/"
 
-        self.pause_len = float(self.app.options[POSITIONS][self.current_select][POSI].split("\n")[0])
+        self.pause_len = float(self.app.option[POSITIONS][self.current_select][POSI].split("\n")[0])
 
         self.app.pre_load()
         self.app.show_view()
@@ -58,13 +58,13 @@ class Controller:
             index = self.app.annotation_text_area_other.index("current")
             txt = self.app.book_other
             self.app.root.update()
-            if self.app.options[POSITIONS][self.app.current_select][AUDIO] == EN:
-                self.app.options[POSITIONS][self.app.current_select][AUDIO] = RU
+            if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
+                self.app.option[POSITIONS][self.app.current_select][AUDIO] = RU
                 self.app.russian_click()
             else:
-                self.app.options[POSITIONS][self.app.current_select][AUDIO] = EN
+                self.app.option[POSITIONS][self.app.current_select][AUDIO] = EN
                 self.app.english_click()
-        if self.app.options[POSITIONS][self.app.current_select][AUDIO] == EN:
+        if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
             curr = R_POS
             curr_other = L_POS
             self.app.sync_other = self.app.rus_sync
@@ -112,8 +112,8 @@ class Controller:
         self.app.annotation_text_area_other.tag_remove("start", "1.0", "end")
         self.app.annotation_text_area_other.tag_add("start", f"1.0", f"{count_lines}.{count_chars}")
         self.app.annotation_text_area_other.tag_config("start",
-                                                       background=self.app.options[SEL],
-                                                       foreground=self.app.options[FG])
+                                                       background=self.app.option[SEL],
+                                                       foreground=self.app.option[FG])
         self.centered_insert(center=True)
 
     def centered_insert(self, center=False):

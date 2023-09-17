@@ -4,10 +4,14 @@ from vosk import Model, KaldiRecognizer
 
 
 class RecognizerClass:
-    def __init__(self, model_path, output, language):
+    def __init__(self, model_path, output, language, config):
         self.language = language
-        self.MAPJSON = f"{output}/{language}.map.json"
-        self.WAV = f"{output}/{language}.wav"
+        if self.language == "rus":
+            self.MAPJSON = f"{output}/{config.RUS_MAP}"
+            self.WAV = f"{output}/{config.RUS_WAV}"
+        else:
+            self.MAPJSON = f"{output}/{config.ENG_MAP}"
+            self.WAV = f"{output}/{config.ENG_WAV}"
         self.MODEL_PATH = model_path
 
     def create_map(self):

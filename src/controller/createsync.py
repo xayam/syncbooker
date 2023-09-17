@@ -46,11 +46,13 @@ for book in folder_of_books:
     for d in del_me:
         if os.path.exists(d):
             os.remove(d)
-    recognizer_eng = recognizer.RecognizerClass(model_path=f"../eng",
-                                                output=f"{data}/{book}", language="eng")
+    recognizer_eng = recognizer.RecognizerClass(model_path=f"../../recognize/eng",
+                                                output=f"{data}/{book}",
+                                                language="eng", config=config)
     recognizer_eng.create_map()
-    recognizer_rus = recognizer.RecognizerClass(model_path=f"../rus",
-                                                output=f"{data}/{book}", language="rus")
+    recognizer_rus = recognizer.RecognizerClass(model_path=f"../../recognize/rus",
+                                                output=f"{data}/{book}",
+                                                language="rus", config=config)
     recognizer_rus.create_map()
 
     if not os.path.exists(f"{data}/{book}/{config.RUS_SYNC}"):
