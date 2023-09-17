@@ -47,7 +47,7 @@ class Model(Config):
             self.app.book_other = self.app.rus_book
 
     def music_load(self):
-        if self.app.options[POSITIONS][self.app.current_select][AUDIO] == EN:
+        if self.app.option[POSITIONS][self.app.current_select][AUDIO] == EN:
             pygame.mixer.music.load(self.app.current_dir + self.app.ENG_FLAC)
             self.app.annotation_text_area1.after_idle(self.app.annotation_text_area1.focus_set)
             self.app.annotation_text_area = self.app.annotation_text_area1
@@ -63,6 +63,6 @@ class Model(Config):
             self.app.book = self.app.rus_book
         self.app.statusbar_label1.configure(
             text=STATUS_AUDIO[self.app.locale] + ": " +
-            self.app.options[POSITIONS][self.app.current_select][AUDIO])
+            self.app.option[POSITIONS][self.app.current_select][AUDIO])
         self.app.root.update()
         self.app.play()

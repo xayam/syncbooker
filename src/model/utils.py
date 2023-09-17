@@ -179,7 +179,7 @@ def find_max_path(alist, a=0, b=0, path=None):
 
 
 def distance(mx, my, a, b):
-    return abs(b*my + a*mx)/((a*a + b*b)**0.5)
+    return abs(b * my + a * mx) / ((a * a + b * b) ** 0.5)
 
 
 def find_max_path_v2(array):
@@ -191,7 +191,7 @@ def find_max_path_v2(array):
                 array[i][j] = 0
     buffer.sort()
     path = []
-    for x in buffer[0:20*int((len(array)**2 + len(array[0])**2)**0.5)]:
+    for x in buffer[0:20 * int((len(array) ** 2 + len(array[0]) ** 2) ** 0.5)]:
         path.append((x[1], x[2]))
     path.sort()
     result = []
@@ -264,3 +264,19 @@ def r_map(data):
             pass
 
     return r_start, r_end, r_word
+
+
+def get_luminance(hex_color):
+    color = hex_color[1:]
+    hex_red = int(color[0:2], base=16)
+    hex_green = int(color[2:4], base=16)
+    hex_blue = int(color[4:6], base=16)
+    return hex_red * 0.2126 + hex_green * 0.7152 + hex_blue * 0.0722
+
+
+def color_contrast(hex_color):
+    luminance = get_luminance(hex_color=hex_color)
+    if luminance < 140:
+        return "white"
+    else:
+        return "black"

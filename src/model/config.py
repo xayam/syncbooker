@@ -39,6 +39,10 @@ class Config:
 
     RUS_ORIG = "rus.orig.html"
     ENG_ORIG = "eng.orig.html"
+    RUS_MAP = "rus.map.json"
+    ENG_MAP = "eng.map.json"
+    RUS_WAV = "rus.wav"
+    ENG_WAV = "eng.wav"
 
     BOOK_SCHEME = [
         RUS_ANNOT, ENG_ANNOT, RUS_SYNC,
@@ -51,17 +55,17 @@ class Config:
         self.app = app
         self.locale = EN
         self.books = []
-        self.options = {LOCALE: EN,
-                        FG: "black",
-                        BG: "white",
-                        SEL: "yellow",
-                        FONT: "Arial",
-                        FONTSIZE: 20,
-                        POSITIONS: {i: {POSI: "0.0\n0.0\n0.0", AUDIO: EN} for i in self.books}
-                        }
+        self.option = {LOCALE: EN,
+                       FG: "#000000",
+                       BG: "#ffffff",
+                       SEL: "#c5f150",
+                       FONT: "Arial",
+                       FONTSIZE: 20,
+                       POSITIONS: {i: {POSI: "0.0\n0.0\n0.0", AUDIO: EN} for i in self.books}
+                       }
         self.load_options()
         self.save_options()
-        self.set_locale(self.options[LOCALE])
+        self.set_locale(self.option[LOCALE])
 
     def set_locale(self, locale):
         self.locale = locale
@@ -69,9 +73,9 @@ class Config:
     def load_options(self):
         if os.path.exists(self.OPTIONS_JSON):
             with open(self.OPTIONS_JSON, mode="r") as opt:
-                self.options = json.load(opt)
+                self.option = json.load(opt)
 
     def save_options(self):
-        json_string = json.dumps(self.options)
+        json_string = json.dumps(self.option)
         with open(self.OPTIONS_JSON, mode="w") as opt:
             opt.write(json_string)

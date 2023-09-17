@@ -29,6 +29,20 @@ ABOUT_SYNCBOOKER = {RU: "SyncBooker — аудиоплеер для синхро
                         "viewing of two books in two languages (Russian and English). "
                         "The catalog contains several classic books."}
 
+CATALOG_IN_DEV = {RU: "В разработке", EN: "In development"}
+
+OPTIONS_COLOR = {RU: "Цвет", EN: "Color"}
+OPTIONS_FONT = {RU: "Шрифт", EN: "Font"}
+OPTIONS_COLOR_SELECTION = {RU: "Выбор цвета", EN: "Color selection"}
+OPTIONS_COLOR_FG = {RU: "Цвет текста", EN: "Text color"}
+OPTIONS_COLOR_BG = {RU: "Цвет фона", EN: "Background color"}
+OPTIONS_COLOR_SEL = {RU: "Цвет выделения", EN: "Highlight color"}
+OPTIONS_FONT_SELECTION = {RU: "Выбор шрифта", EN: "Font selection"}
+
+SCELETON_DATA_NOT_FOUND = {RU: "Папка '../data' не найдена", EN: "Folder '../data' not found"}
+SCELETON_BOOKS_NOT_FOUND = {RU: "Книги в папке '../data' не найдены",
+                            EN: "Books in folder '../data' not found"}
+
 STATUS_AUDIO = {RU: 'Аудио', EN: 'Audio'}
 STATUS_POSITION = {RU: 'Позиция', EN: 'Position'}
 STATUS_TELEGRAM = {RU: 'Телеграм', EN: 'Telegram'}
