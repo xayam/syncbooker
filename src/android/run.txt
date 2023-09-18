@@ -1,4 +1,0 @@
-chmod +x install.sh
-sudo ./install.sh
-buildozer init
-buildozer android debug
