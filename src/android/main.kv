@@ -1,0 +1,66 @@
+
+<Container>:
+    size_hint: 1, 1
+    do_default_tab: False
+    TabbedPanelItem:
+        text: 'Catalog'
+        BoxLayout:
+            Label:
+                text: 'Catalog table area'
+    TabbedPanelItem:
+        text: 'Table'
+        BoxLayout:
+            FloatLayout:
+                size: 75, 200
+                size_hint: None, 1
+                pos_hint: {"center_x": 0.5, "top": 1}
+                Button:
+                    size: 75, 40
+                    size_hint: None, 0.2
+                    pos_hint: {"center_x": 0.5, "top": 1}
+                    text: "Prev"
+                Button:
+                    size: 75, 40
+                    size_hint: None, 0.2
+                    pos_hint: {"center_x": 0.5, "top": 0.8}
+                    text: "Play"
+                Button:
+                    size: 75, 40
+                    size_hint: None, 0.2
+                    pos_hint: {"center_x": 0.5, "top": 0.6}
+                    text: "Pause"
+                Button:
+                    size: 75, 40
+                    size_hint: None, 0.2
+                    pos_hint: {"center_x": 0.5, "top": 0.4}
+                    text: "Stop"
+                Button:
+                    size: 75, 40
+                    size_hint: None, 0.2
+                    pos_hint: {"center_x": 0.5, "top": 0.2}
+                    text: "Next"
+            ScrollView:
+                do_scroll_x: False
+                do_scroll_y: True
+                Label:
+                    id: book_left
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    text_size: self.width, None
+                    padding: 10, 10
+                    text: 'English book text\n' * 100
+            ScrollView:
+                do_scroll_x: False
+                do_scroll_y: True
+                Label:
+                    id: book_right
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    text_size: self.width, None
+                    padding: 10, 10
+                    text: 'Текст русской книги\n' * 100
+    TabbedPanelItem:
+        text: 'Options'
+        BoxLayout:
+            Label:
+                text: "Options area"

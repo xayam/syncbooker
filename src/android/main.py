@@ -1,10 +1,14 @@
-from kivymd.app import MDApp
-from kivymd.uix.button import Button
+from kivy.app import App
+from kivy.uix.tabbedpanel import TabbedPanel
 
 
-class MyApp(MDApp):
-  def build(self):
-    return Button(text="Hello World! Привет Мир!")
+class Container(TabbedPanel):
+    pass
 
 
-MyApp().run()
+class MainApp(App):
+    def build(self):
+        return Container()
+
+
+MainApp().run()
