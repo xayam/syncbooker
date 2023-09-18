@@ -1,0 +1,3 @@
+
+﻿p4a apk --private $HOME/PycharmProjects/syncbookerkivy --package=org.example.syncbookerkivy --name "SyncBooker" --orientation=landscape --icon=$HOME/PycharmProjects/syncbookerkivy/img/icon.png --version 0.3 --arch armeabi-v7a --bootstrap=sdl2 --requirements=python3,kivy
+
